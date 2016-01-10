@@ -42,3 +42,13 @@ Image Randomizer - bulk image randomization tool with API
 - Все методы должны быть обратимы (если возможно)
 - выбор файлов
 - рандомизация exif
+
+###Screenshots \ Скриншоты
+####Tutorial \ Туториал
+![Tutorial](Screenshots/tutorial.png)
+####Main Screen \ Главный экран
+![Main screen](Screenshots/single.png)
+####Bulk randomization \ Массовая рандомизация
+![Bulk randomization](Screenshots/multi.png)
+####Settings \ Настройки
+![Settings](Screenshots/settings.png)
