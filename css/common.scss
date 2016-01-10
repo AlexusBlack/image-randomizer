@@ -1,0 +1,61 @@
+@import "aliface";
+
+div.box.filelist, div.box.options {
+	height: 420px;
+}
+div.box.options table {
+	width: 100%;
+
+	thead {
+		background-color: #eeeeee;
+	}
+	th:nth-child(1) {
+		text-align: left;
+	}
+	tbody tr:hover, tbody tr.tDnD_whileDrag {
+		background-color: #cccccc;
+	}
+}
+div.box.apilink, div.box.downloadlink {
+	height: 95px;
+	overflow: hidden;
+}
+div.apilink input[type=text] {
+	width: 81%;
+	vertical-align: middle;
+}
+div.downloadlink .btn {
+	width:100%;
+	font-size: 17px;
+}
+.preview.screen iframe {
+	width: 100%;
+	height: 400px;
+}
+
+textarea[name=fileslist] {
+	width: 96%;
+	height: 100%;
+	transition: height 1s;
+}
+input[name=outdir] {
+	width: 96%;
+	height: 0%;
+	transition: height 1s;
+	opacity:0;
+}
+
+.filelist.multiline {
+	textarea[name=fileslist] {
+		height: 80%;
+	}
+	input[name=outdir] {
+		height: 15%;
+	}
+}
+#convert_progress {
+	display: none;
+}
+#refreshPreview {
+	float: right;
+}

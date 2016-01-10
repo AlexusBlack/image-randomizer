@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Randomizer by Alexus Lab</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcat icon" type="image/x-icon" href="data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABNmlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjarY6xSsNQFEDPi6LiUCsEcXB4kygotupgxqQtRRCs1SHJ1qShSmkSXl7VfoSjWwcXd7/AyVFwUPwC/0Bx6uAQIYODCJ7p3MPlcsGo2HWnYZRhEGvVbjrS9Xw5+8QMUwDQCbPUbrUOAOIkjvjB5ysC4HnTrjsN/sZ8mCoNTIDtbpSFICpA/0KnGsQYMIN+qkHcAaY6addAPAClXu4vQCnI/Q0oKdfzQXwAZs/1fDDmADPIfQUwdXSpAWpJOlJnvVMtq5ZlSbubBJE8HmU6GmRyPw4TlSaqo6MukP8HwGK+2G46cq1qWXvr/DOu58vc3o8QgFh6LFpBOFTn3yqMnd/n4sZ4GQ5vYXpStN0ruNmAheuirVahvAX34y/Axk/96FpPYgAAACBjSFJNAAB6JQAAgIMAAPn/AACA6AAAUggAARVYAAA6lwAAF2/XWh+QAAABfElEQVR42qRSQUvCYBh+VrIOc4d5USuDWoNCZREJHotuYSGtk6ciYUJ/QbtIxw7eXB26dbPDkBDqB3gqwuMaQiJrlwzcDg1iHcTR0JmjB154eb6X5/ve73mIXNOy8Q8Ehs1L9RxKTYLV73kOR1K74AQRse2sw80MG6Um4UPrwLZtz2pcX2Lu8QqqfDMqMA14nke1WoVyJ3kLmKYJgiBGKpFIQNd1sCyL6OyXs2pg3E0kzeDoQXdxjeM0DMNAOBxGMpnEZ7eN0Brjb4WJLvyG1e/hNk26uHg8jmAwCABotVpYP10eL0BRFGzbOxqqqkL7ngNPM/5dUFUVxWIR3KHozwVdH3xooVBAe2UH7MHJ5ByQNINc00KuaWHj7AKyLAMA8vk8+p1X1+yfK6xm86hUKjBNE5lMBsTTPcz3t+kFSJqBvbmHer0OiqJQKpWg1CR/UeYEEeVy2XnFvPYMo9t2C3CCiFA0hlA0Bk4Q3dZGloDUvnOuLW4huDDIwc8ARJmPH93tt2kAAAAASUVORK5CYII=">
+	<script>
+		<?php 
+		if(DEMO) 
+			print "window.ImageRandomizerInDemoMode=true;"; 
+		else
+			print "window.ImageRandomizerInDemoMode=false;"; 
+		?>
+		@@include('../3rd-party/jquery-1.11.1.min.js')
+		@@include('../3rd-party/jquery.cookie.js')
+		@@include('../3rd-party/jquery.tablednd.js')
+		@@include('../3rd-party/intro.js')
+		@@include('../js/scripts.js')
+	</script>
+</head>
+<body>
+	<div class="container" data-intro="%welcome-to-imrand%" data-step="1">
+		<div class="box header" data-intro="%this-script-is-for-randomization%" data-step="2">
+			<ul class="nav menu" data-intro="%thx-view-help%" data-step="8">
+				<li><a href="<?php print DEMO?'/':'#';?>">%main-screen%</a></li>
+				<li><a href="#help">%help-screen%</a></li>
+				<li><a href="#settings">%settings-screen%</a></li>
+			</ul>
+			<div class="scriptName">Image Randomizer @@version</div>
+			<ul class="nav languages">
+				<li><a href="#" class="langlink" lang="ru">RU</a></li>
+				<li><a href="#" class="langlink" lang="en">EN</a></li>
+				<!-- <li><a href="#">EN</a></li> -->
+			</ul>
+		</div>
+		<div class="screen main">
+			<div class="row">
+				<div class="box box-1-2 filelist" data-intro="%files-for-rand-block%" data-step="3">
+					<textarea name="fileslist" placeholder="%files-for-rand-by-line%"></textarea>
+					<input type="text" name="outdir" placeholder="%result-folder%">
+				</div>
+				<div class="box box-1-2 options" data-intro="%chose-methods%" data-step="4">
+
+					<table>
+						<thead>
+							<tr>
+								<th><input type="checkbox" name="uncheck"></th>
+								<th>%method%</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="hmirror" <?php print $RandomizerAPI_selfDiagnostics['php_version_is_55']?"checked":"disabled"?>>
+									</div>
+								</td>
+								<td>%horizontal-mirror%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="vmirror" <?php print $RandomizerAPI_selfDiagnostics['php_version_is_55']?"":"disabled"?>> 
+									</div>
+								</td>
+								<td>%vertical-mirror%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="invert">
+									</div>
+								</td>
+								<td>%invert-colors%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="grayscale">
+									</div>
+								</td>
+								<td>%grayscale%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="crop" checked>
+									</div>
+								</td>
+								<td>%crop%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="fixresize">
+									</div>
+								</td>
+								<td>%fixed-resize%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="resize">
+									</div>
+								</td>
+								<td>%unfixed-resize%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="interference">
+									</div>
+								</td>
+								<td>%add-noise%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="rotate">
+									</div>
+								</td>
+								<td>%rotate%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="border">
+									</div>
+								</td>
+								<td>%add-border%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="sharp" checked>
+									</div>
+								</td>
+								<td>%change-contrast%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="blur">
+									</div>
+								</td>
+								<td>%blur%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="eskiz">
+									</div>
+								</td>
+								<td>%eskiz%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="pixelization" <?php print $RandomizerAPI_selfDiagnostics['php_version_is_53']?"":"disabled"?>> 
+									</div>	
+								</td>
+								<td>%pixelization%</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="option-container">
+										<input type="checkbox" name="move"> 
+									</div>	
+								</td>
+								<td>%add-move%</td>
+							</tr>
+						</tbody>
+					</table>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="box box-6-8 apilink" data-intro="%api-available%" data-position="top" data-step="7">
+					<div class="apioptions">
+						<!-- Данные для передачи: 
+						<input type="checkbox" name="interference"> размер
+						<input type="checkbox" name="interference"> сдвиг
+						<input type="checkbox" name="interference"> растяжение
+						<input type="checkbox" name="interference"> поворот
+						<input type="checkbox" name="interference"> рамка -->
+						<select name="format">
+							<option value="image" selected>%response-format%</option>
+							<option value="image">%image%</option>
+							<option value="img">%img-tag%</option>
+							<option value="bg">%background-and-css%</option>
+							<option value="base64">%base64%</option>
+							<!-- <option value="css">CSS</option>
+							<option value="json">JSON</option> -->
+						</select>
+					</div>
+					<input type="text" id="apilink" readonly="true" placeholder="%api-link%">
+					<button class="btn btn-attach-right" id="previewButton" data-intro="%use-preview%" data-step="5">%preview%</button>
+				</div>
+				<div class="box box-2-8 downloadlink">
+					<button class="btn" id="downloadButton" data-intro="%you-can-download-result%" data-step="6">%download-result%</button>
+					<div class="progressbar" id="convert_progress"><span style="width:0%;"></span><span></span></div>
+				</div>
+			</div>
+		</div>
+		<div class="screen help">
+			<div class="row">
+				<div class="box">
+					<h2>%help-screen%</h2>
+					%help%
+				</div>
+			</div>
+		</div>
+		<div class="screen settings">
+			<div class="row">
+				<div class="box">
+					<h2>%settings-screen%</h2>
+					<p>
+						<p>
+							<b>%full-version%:</b><br>
+							Image Randomizer v@@full_version<br>
+							<b>%php-version%:</b><br>
+							PHP <?php print PHP_VERSION; ?>
+						</p>
+						<table border="0" class="table">
+							<tr class="cache_is_writable <?php print $RandomizerAPI_selfDiagnostics['cache_is_writable']?"good":"bad"?>">
+								<td>%chache-folder-is-writable%</td>
+								<td><?php print $RandomizerAPI_selfDiagnostics['cache_is_writable']?"%yes%":"%no%"?></td>
+								<td>%needed-for-api%</td>
+							</tr>
+							<tr class="images_is_writable <?php print $RandomizerAPI_selfDiagnostics['images_is_writable']?"good":"bad"?>">
+								<td>%images-folder-is-writable%</td>
+								<td><?php print $RandomizerAPI_selfDiagnostics['images_is_writable']?"%yes%":"%no%"?></td>
+								<td>%needed-for-mass-randomization%</td>
+							</tr>
+							<tr class="images_is_readable <?php print $RandomizerAPI_selfDiagnostics['images_is_readable']?"good":"bad"?>">
+								<td>%images-folder-is-readable%</td>
+								<td><?php print $RandomizerAPI_selfDiagnostics['images_is_readable']?"%yes%":"%no%"?></td>
+								<td>%needed-for-image-randomization%</td>
+							</tr>
+							<tr class="phpgd_installed <?php print $RandomizerAPI_selfDiagnostics['phpgd_installed']?"good":"bad"?>">
+								<td>%phpdg-installed%</td>
+								<td><?php print $RandomizerAPI_selfDiagnostics['phpgd_installed']?"%yes%":"%no%"?></td>
+								<td>%needed-for-script%</td>
+							</tr>
+							<tr class="php_version_is_55 <?php print $RandomizerAPI_selfDiagnostics['php_version_is_55']?"good":"warning"?>">
+								<td>%php-version-is-or-eq-55%</td>
+								<td><?php print $RandomizerAPI_selfDiagnostics['php_version_is_55']?"%yes%":"%no%"?></td>
+								<td>%needed-for-perfect-functionality%</td>
+							</tr>
+						</table>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="screen preview">
+			<div class="row">
+				<div class="box">
+					<h2>%preview%</h2>
+					<button class="btn backToSettings">%back-to-settings%</button>
+					<button class="btn" id="refreshPreview">%refresh%</button>
+					<iframe src="about:blank"></iframe>
+					<button class="btn backToSettings">%back-to-settings%</button>
+				</div>
+			</div>
+		</div>
+		<div class="box footer">
+			<span class="copy"><a href="http://a-l-e-x-u-s.ru">&copy;Alexus Lab %CURRENT_YEAR%</a></span>
+		</div>
+	</div>
+
+<!--CSS Styles-->
+<style>
+@@include('../3rd-party/introjs.css')
+@@include('../css/styles.css')
+</style>
+<link rel='stylesheet' type='text/css' href='http://fonts.useso.com/css?family=Aldrich'>
+<?php if(DEMO) include("metrika.html");?>
+</body>
+</html>
